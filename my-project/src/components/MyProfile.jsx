@@ -64,7 +64,7 @@ useEffect(() => {
     const Profile = async () => {
       if (!user) return; // If user is not set, return early
       try {
-        const response = await fetch(`http://localhost:3000/profile?email=${user}`, {
+        const response = await fetch(`http://localhost:5000/profile?email=${user}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -176,7 +176,7 @@ useEffect(() => {
     console.log(search);
     // You can add your API call here to submit the form
     try {
-        const response = await fetch(`http://localhost:3000/searchUser?userhandle=${search}`, {
+        const response = await fetch(`http://localhost:5000/searchUser?userhandle=${search}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",

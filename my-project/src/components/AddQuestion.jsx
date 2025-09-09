@@ -30,7 +30,7 @@ const AddQuestionForm = () => {
     console.log(newQuestion);
     // You can add your API call here to submit the form
     try {
-        const response = await fetch(`http://localhost:3000/questions?email=${user}`, {
+        const response = await fetch(`http://localhost:5000/questions?email=${user}`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

@@ -7,12 +7,13 @@ const BookmarkedQuestions = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [user, setUser] = useState('');
+  const [openSolution, setOpenSolution] = useState(null); // NEW STATE
 
 
 
-
-
-
+  const handleSolutionToggle = (idx) => {
+    setOpenSolution(openSolution === idx ? null : idx);
+  };
   const addQuestion= ()=> {
     window.location.href='/addquestion';
   }
@@ -25,7 +26,8 @@ const BookmarkedQuestions = () => {
   const fetchQuestions = async () => {
     if (!user) return; // If user is not set, return early
     try {
-      const response = await fetch(`http://localhost:3000/question?email=${user}`, {
+      console.log(user);
+      const response = await fetch(`http://localhost:5000/question?email=${user}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -65,7 +67,7 @@ const BookmarkedQuestions = () => {
 
 
     try {
-      const response = await fetch(`http://localhost:3000/bookmark/${questionId}/${user}`, {
+      const response = await fetch(`http://localhost:5000/bookmark/${questionId}/${user}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -102,40 +104,74 @@ const BookmarkedQuestions = () => {
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
-
-  return (
-    <div className="bg-gray-900 p-6 rounded-lg shadow-md">
-      <div className="flex justify-between ">
-      <h2 className="text-2xl font-bold mb-4 text-white"> Questions</h2>
-      <button  onClick={addQuestion} type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add a Question</button>
-      <button  onClick={MyBookmarks} type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">My Bookmarks</button>
-      </div>
   
-  <div id="questions-container" className="space-y-4">
-    {questions.map((question) => (
-      <div className="p-4 bg-gray-800 rounded-lg hover:bg-gray-700 transition duration-300 ease-in-out">
-        <h3 className="text-xl font-semibold text-blue-400 mb-2">{question.title}
-          
-        </h3>
-        <button
-              onClick={() => bookmarkQuestion(question._id)}
-              type="button"
-              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+ return (
+  <div className="bg-gray-900 p-6 rounded-lg shadow-md">
+    <div className="flex justify-between ">
+      <h2 className="text-2xl font-bold mb-4 text-white">Questions</h2>
+      <button
+        onClick={addQuestion}
+        type="button"
+        className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+      >
+        Add a Question
+      </button>
+      <button
+        onClick={MyBookmarks}
+        type="button"
+        className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+      >
+        My Bookmarks
+      </button>
+    </div>
+
+    <div id="questions-container" className="space-y-4">
+      {questions.map((question, idx) => (
+        <div
+          key={question._id}
+          className="p-4 bg-gray-800 rounded-lg hover:bg-gray-700 transition duration-300 ease-in-out"
+        >
+          <h3 className="text-xl font-semibold text-blue-400 mb-2">
+            {question.title}
+          </h3>
+          <button
+            onClick={() => bookmarkQuestion(question._id)}
+            type="button"
+            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+          >
+            Bookmark
+          </button>
+          <a
+            href={question.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-300 underline hover:text-blue-500 mb-2 block"
+          >
+            Link to the Problem
+          </a>
+          <p className="text-gray-400 mb-2">
+            <strong>Topics:</strong> {question.topics.join(", ")}
+          </p>
+          <div>
+            <button
+              onClick={() => handleSolutionToggle(idx)}
+              className="text-white bg-gray-700 hover:bg-gray-600 font-medium rounded px-3 py-1 mb-2"
             >
-              Bookmark
+              {openSolution === idx ? "Hide Solution" : "Show Solution"}
             </button>
-        <a href={question.link} target='blank' className="text-blue-300 underline hover:text-blue-500 mb-2 block">Link to the Problem</a>
-        <p className="text-gray-400 mb-2"><strong>Topics:</strong> {question.topics.join(", ")}</p>
-        <p className="text-gray-400"><strong>Solution:</strong>  <SyntaxHighlighter language="cpp"  showLineNumbers>
-      {question.solution}
-    </SyntaxHighlighter></p>
-      </div>
-    ))}
+            {openSolution === idx && (
+              <div className="mt-2">
+                <SyntaxHighlighter language="cpp" showLineNumbers>
+                  {question.solution}
+                </SyntaxHighlighter>
+              </div>
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
   </div>
-</div>
-
-
-  );
+);
 };
 
 export default BookmarkedQuestions;

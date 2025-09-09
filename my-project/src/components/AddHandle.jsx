@@ -30,7 +30,7 @@ const AddHandle = () => {
         console.log(newHandle);
         // You can add your API call here to submit the form
         try {
-            const response = await fetch(`http://localhost:3000/addHandles`, {
+            const response = await fetch(`http://localhost:5000/addHandles`, {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",

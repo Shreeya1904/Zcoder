@@ -42,7 +42,7 @@ const EditProfile = () => {
         
   
       try {
-        const response = await fetch(`http://localhost:3000/update?userId=${id}`, {
+        const response = await fetch(`http://localhost:5000/update?userId=${id}`, {
           method: "POST",
           headers: {
             'Content-Type': 'application/json'

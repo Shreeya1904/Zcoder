@@ -1,11 +1,13 @@
 const mongoose = require('mongoose');
-mongoose.connect("mongodb://localhost:27017/zcoder")
+require ('dotenv').config();
+mongoose.connect(process.env.Mongo_url)
     .then(() => {
         console.log("mongodb connected");
     })
     .catch(() => {
         console.log("fail.connect");
     })
+
 
     const questionSchema = new mongoose.Schema({
         title: {

@@ -53,7 +53,7 @@ import { useLocation } from "react-router-dom";
   };
 
   return (
-   <nav className="nav sticky top-0 z-50 py-3  border-b border-neutral-700/80">
+   <nav className="nav sticky top-0 z-50 py-3  border-b border-neutral-700/80 bg-[#0a1a2f]">
    
     <div className="container px-4 mx-auto relative text-sm">
       <div className="flex justify-between items-center">

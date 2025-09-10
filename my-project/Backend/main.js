@@ -41,7 +41,7 @@ main.listen(5000, () => {
 });
 
 main.get("/", async (req, res) => {
-  const id = "665aa2ad3c5c5ce5ada302b0";
+  const id = "68c06cf05638579c40171040";
   const user = await User.findById(id);
   const questions = await Question.find();
   res.render("landing", { user, questions });

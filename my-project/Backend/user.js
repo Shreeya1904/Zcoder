@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 require ('dotenv').config();
 mongoose.connect(process.env.Mongo_url)
     .then(() => {
-        console.log("mongodb connected");
+        console.log("mongodb connected userschema");
     })
     .catch(() => {
-        console.log("fail.connect");
+        console.log("fail.connect userschema");
     })
 
 const userSchema = new mongoose.Schema({

@@ -1,10 +1,6 @@
 {
-    "version": 2,
-    "name": "music-album",
-    "builds": [
-       { "src": "app.js", "use": "@vercel/node" }
-    ],
-    "routes": [
-       { "src": "/(.*)", "dest": "/app.js" }
-    ]
- }
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "https://zcoder-904x.onrender.com/api/$1" },
+    { "source": "/(.*)", "destination": "/" }
+  ]
+}

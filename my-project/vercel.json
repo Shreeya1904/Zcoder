@@ -10,5 +10,16 @@
   "rewrites": [
     { "source": "/api/(.*)", "destination": "https://zcoder-904x.onrender.com/api/$1" },
     { "source": "/(.*)", "destination": "/" }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; img-src 'self' https://zcoder-904x.onrender.com; script-src 'self'; style-src 'self' 'unsafe-inline';"
+        }
+      ]
+    }
   ]
 }

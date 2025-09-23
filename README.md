@@ -1,7 +1,7 @@
 # Zcoder: All Your Coding Challenges in One Place
 
 #Deployment link
-https://zcoderstage.vercel.app/home
+https://dezcoder.vercel.app/
 
 Welcome to Zcoder, the ultimate hub for all your bookmarked coding problems! Collect and manage your favorite challenges from various coding platforms in one place. Start solving and keep track of your progress effortlessly!
 
